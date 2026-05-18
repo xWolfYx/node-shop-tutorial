@@ -6,14 +6,16 @@ const __dirname = path.dirname(__fileName);
 
 import express from "express";
 
-import productRouter from "./routes/product.route";
+import { router as productRouter } from "./routes/product.route";
 import shopRouter from "./routes/shop.route";
+import { rootPath } from "./utils/path";
 
 const PORT = 3000;
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(`${rootPath}/public`));
 
 app.use("/admin", productRouter);
 
