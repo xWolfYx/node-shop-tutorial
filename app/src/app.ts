@@ -1,9 +1,4 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __fileName = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__fileName);
-
 import express from "express";
 
 import { router as productRouter } from "./routes/product.route";
@@ -14,6 +9,9 @@ const PORT = 3000;
 
 const app = express();
 
+app.set("view engine", "ejs");
+app.set("views", path.join(rootPath, "views"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${rootPath}/public`));
 
@@ -22,7 +20,10 @@ app.use("/admin", productRouter);
 app.use(shopRouter);
 
 app.use((_, res) => {
-	res.status(404).sendFile(path.join(__dirname, "views", "not-found.html"));
+	res.status(404).render("not-found", {
+		pageTitle: "404 - Page Not Found",
+		bodyClass: "page page--error",
+	});
 });
 
 app.listen(PORT, () => {
