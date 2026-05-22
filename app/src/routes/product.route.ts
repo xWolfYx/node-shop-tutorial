@@ -1,18 +1,17 @@
-import path from "node:path";
 import express from "express";
-import { rootPath } from "../utils/path";
 
 const router = express.Router();
 
 const products: { title: string }[] = [];
 
 router.get("/add-product", (_, res) => {
-	res.sendFile(path.join(rootPath, "views", "add-product.html"));
+	res.render("add-product", {
+		pageTitle: "Add Product",
+	});
 });
 
 router.post("/add-product", (req, res) => {
-	console.log(req.body);
-	products.push({ title: req.body.title });
+	if (req.body.title) products.push({ title: req.body.title });
 	res.redirect("/");
 });
 
