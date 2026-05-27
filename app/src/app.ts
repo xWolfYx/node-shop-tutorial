@@ -16,6 +16,11 @@ app.set("views", path.join(rootPath, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${rootPath}/public`));
 
+app.use((req, res, next) => {
+	res.locals.path = req.path;
+	next();
+});
+
 app.use("/admin", productRouter);
 
 app.use(shopRouter);
