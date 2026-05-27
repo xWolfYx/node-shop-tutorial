@@ -1,6 +1,7 @@
 import path from "node:path";
 import express from "express";
 
+import { renderNotfoundPage } from "./controllers/notfound.controller";
 import { router as productRouter } from "./routes/product.route";
 import shopRouter from "./routes/shop.route";
 import { rootPath } from "./utils/path";
@@ -19,12 +20,7 @@ app.use("/admin", productRouter);
 
 app.use(shopRouter);
 
-app.use((_, res) => {
-	res.status(404).render("not-found", {
-		pageTitle: "404 - Page Not Found",
-		bodyClass: "page page--error",
-	});
-});
+app.use(renderNotfoundPage);
 
 app.listen(PORT, () => {
 	console.log(`App is running on http://localhost:${PORT}`);
