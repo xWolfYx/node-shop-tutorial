@@ -2,7 +2,7 @@ import path from "node:path";
 import express from "express";
 
 import { renderNotfoundPage } from "./controllers/notfound.controller";
-import { router as productRouter } from "./routes/product.route";
+import { router as adminRouter } from "./routes/admin.route";
 import shopRouter from "./routes/shop.route";
 import { rootPath } from "./utils/path";
 
@@ -21,7 +21,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use("/admin", productRouter);
+app.use("/admin", adminRouter);
 
 app.use(shopRouter);
 
