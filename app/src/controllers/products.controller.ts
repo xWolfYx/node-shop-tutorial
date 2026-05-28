@@ -4,14 +4,14 @@ import { Product } from "../models/product";
 export const renderProducts = async (_: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
-	res.render("shop", {
+	res.render("shop/product-list", {
 		products,
 		pageTitle: "Shop",
 	});
 };
 
 export const renderAddProducts = (_: Request, res: Response) => {
-	res.render("add-product", {
+	res.render("admin/add-product", {
 		pageTitle: "Add Product",
 	});
 };
