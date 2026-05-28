@@ -16,6 +16,10 @@ export const renderAddProducts = (_: Request, res: Response) => {
 	});
 };
 
+export const renderAdminProducts = (_: Request, res: Response) => {
+	res.render("admin/product-list", { pageTitle: "Admin - Products" });
+};
+
 export const addProduct = async (req: Request, res: Response) => {
 	if (req.body.title) {
 		const product = new Product(req.body.title);
