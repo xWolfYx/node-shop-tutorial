@@ -10,6 +10,10 @@ export const renderCart = (_: Request, res: Response) => {
 	res.render("shop/cart", { pageTitle: "Cart" });
 };
 
+export const renderOrders = (_: Request, res: Response) => {
+	res.render("shop/orders", { pageTitle: "Orders" });
+};
+
 export const renderCheckout = (_: Request, res: Response) => {
 	res.render("shop/checkout", { pageTitle: "Checkout" });
 };
