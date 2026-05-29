@@ -16,8 +16,13 @@ export const renderAddProducts = (_: Request, res: Response) => {
 	});
 };
 
-export const renderAdminProducts = (_: Request, res: Response) => {
-	res.render("admin/product-list", { pageTitle: "Admin - Products" });
+export const renderAdminProducts = async (_: Request, res: Response) => {
+	const products = await Product.fetchAll();
+
+	res.render("admin/product-list", {
+		products,
+		pageTitle: "Admin - Products",
+	});
 };
 
 export const addProduct = async (req: Request, res: Response) => {
