@@ -4,9 +4,9 @@ import { Product } from "../models/product";
 export const renderProducts = async (_: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
-	res.render("shop/index", {
+	res.render("shop/product-list", {
 		products,
-		pageTitle: "Shop",
+		pageTitle: "Products",
 	});
 };
 
