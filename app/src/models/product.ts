@@ -1,8 +1,10 @@
+import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { rootPath } from "../utils/path";
 
-interface ProductData {
+export interface ProductData {
+	id: string;
 	title: string;
 	imageUrl: string;
 	description: string;
@@ -27,6 +29,7 @@ export class Product implements ProductData {
 		public imageUrl: string,
 		public description: string,
 		public price: number,
+		public id: string,
 	) {
 		this.title = title;
 		this.price = price;
@@ -45,12 +48,16 @@ export class Product implements ProductData {
 		try {
 			const products = await getData();
 
-			products.push({
+			this.id = randomUUID();
+			const newProduct = {
+				id: this.id,
 				title: this.title,
 				imageUrl: this.imageUrl,
 				description: this.description,
 				price: this.price,
-			});
+			};
+
+			products.push(newProduct);
 			await fs.writeFile(productFilePath, JSON.stringify(products, null, 2));
 		} catch (err) {
 			console.log(err);
