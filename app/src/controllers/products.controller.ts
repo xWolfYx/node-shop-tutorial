@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import { Product } from "../models/product";
+import { findById } from "../utils/path";
 
 export const renderProducts = async (_: Request, res: Response) => {
 	const products = await Product.fetchAll();
@@ -7,6 +8,16 @@ export const renderProducts = async (_: Request, res: Response) => {
 	res.render("shop/product-list", {
 		products,
 		pageTitle: "Products",
+	});
+};
+
+export const renderProduct = async (req: Request, res: Response) => {
+	const products = await Product.fetchAll();
+	const product = products.find((p) => findById(req, p));
+	res.render("shop/product-details", {
+		pageTitle: product?.title,
+		path: "/products",
+		product,
 	});
 };
 
