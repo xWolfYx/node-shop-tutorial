@@ -23,10 +23,7 @@
 				</div>
 
 				<div class="card__actions">
-					<form action="/cart" method="POST">
-						<button type="submit" class="btn">Add to Cart</button>
-						<input type="hidden" name="<%= product.id %>">
-					</form>
+					<%- include("../includes/addToCartBtn.ejs") %>
 					<a href="/products" class="btn"> Back to Products </a>
 				</div>
 			</article>
