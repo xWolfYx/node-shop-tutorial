@@ -39,7 +39,8 @@ export const renderAdminProducts = async (_: Request, res: Response) => {
 export const addProduct = async (req: Request, res: Response) => {
 	const { title, imageUrl, price, description } = req.body;
 	if (title && imageUrl && price && description) {
-		const product = new Product(title, imageUrl, description, price);
+		const id = randomUUID();
+		const product = new Product(id, title, imageUrl, description, price);
 		await product.save();
 	}
 	res.redirect("/");
