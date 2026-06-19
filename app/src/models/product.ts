@@ -1,15 +1,8 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import type { ProductData } from "../lib/types";
 import { rootPath } from "../utils/path";
-
-export interface ProductData {
-	id: string;
-	title: string;
-	imageUrl: string;
-	description: string;
-	price: number;
-}
 
 const productFilePath = path.join(rootPath, "data", "products.json");
 
@@ -30,10 +23,7 @@ export class Product implements ProductData {
 		public description: string,
 		public price: number,
 		public id: string,
-	) {
-		this.title = title;
-		this.price = price;
-	}
+	) {}
 
 	static async fetchAll(): Promise<ProductData[]> {
 		try {
