@@ -36,7 +36,6 @@ export class Cart implements ICart {
 			cart.totalPrice += productPrice;
 
 			fs.writeFile(cartFilePath, JSON.stringify(cart, null, 2), (err) => {
-				console.log(JSON.stringify(cart, null, 2));
 				if (err) console.log(`Error in addToCart: ${err.message}`);
 				console.log("Cart item added successfully");
 			});
