@@ -6,7 +6,7 @@ import { rootPath } from "../utils/path.js";
 const cartFilePath = path.join(rootPath, "data", "cart.json");
 
 export class Cart implements ICart {
-	static addToCart(id: string, productPrice: number) {
+	addToCart(id: string, productPrice: number) {
 		fs.readFile(cartFilePath, "utf-8", (err, cartItems) => {
 			let cart: CartData = { products: [], totalPrice: 0 };
 

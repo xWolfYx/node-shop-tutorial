@@ -14,6 +14,7 @@ export const renderCart = (_: Request, res: Response) => {
 };
 
 export const postCart = async (req: Request, res: Response) => {
+	const cart = new Cart();
 	const products = await Product.fetchAll();
 
 	const { productId } = req.body;
@@ -21,8 +22,7 @@ export const postCart = async (req: Request, res: Response) => {
 
 	if (!product) return res.status(404).send("Product not found");
 
-	Cart.addToCart(product?.id, Number(product?.price));
-	console.log(productId, product?.price);
+	cart.addToCart(product?.id, Number(product?.price));
 	res.redirect("/cart");
 };
 
