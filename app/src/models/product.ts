@@ -18,11 +18,11 @@ const getData = async (): Promise<ProductData[]> => {
 
 export class Product implements ProductData {
 	constructor(
+		public id: string,
 		public title: string,
 		public imageUrl: string,
 		public description: string,
 		public price: number,
-		public id: string,
 	) {}
 
 	static async fetchAll(): Promise<ProductData[]> {
