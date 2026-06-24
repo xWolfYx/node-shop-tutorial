@@ -1,11 +1,11 @@
 import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
-import { findById } from "../lib/utils.js";
+import { findById, toCents, toUSD } from "../lib/utils.js";
 import { Product } from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
-	const products = await Product.fetchAll();
-
+	const rawProducts = await Product.fetchAll();
+	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
 	res.render("shop/product-list", {
 		products,
 		pageTitle: "Products",
@@ -42,8 +42,14 @@ export const addProduct = async (req: Request, res: Response) => {
 	const { title, imageUrl, price, description } = req.body;
 	if (title && imageUrl && price && description) {
 		const id = randomUUID();
-		const product = new Product(id, title, imageUrl, description, price);
-		await product.save();
+		const newProduct = new Product(
+			id,
+			title,
+			imageUrl,
+			description,
+			toCents(price),
+		);
+		await newProduct.save();
 	}
 	res.redirect("/");
 };
