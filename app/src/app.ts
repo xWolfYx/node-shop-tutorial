@@ -1,11 +1,11 @@
 import path from "node:path";
 import express from "express";
 
-import { renderNotfoundPage } from "./controllers/notfound.controller";
-import { router as adminRouter } from "./routes/admin.route";
-import { router as productRouter } from "./routes/products.route";
-import shopRouter from "./routes/shop.route";
-import { rootPath } from "./utils/path";
+import { renderNotfoundPage } from "./controllers/notfound.controller.js";
+import { router as adminRouter } from "./routes/admin.route.js";
+import { router as productRouter } from "./routes/products.route.js";
+import shopRouter from "./routes/shop.route.js";
+import { rootPath } from "./utils/path.js";
 
 const PORT = 3000;
 
