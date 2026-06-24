@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { CartData, ICart } from "../lib/types.js";
+import type { CartData, CartProduct, ICart } from "../lib/types.js";
 import { rootPath } from "../utils/path.js";
 
 const cartFilePath = path.join(rootPath, "data", "cart.json");
@@ -21,7 +21,7 @@ export class Cart implements ICart {
 			const existingProductIndex = cart.products.findIndex((p) => p.id === id);
 			const existingProduct = cart.products[existingProductIndex];
 
-			let updatedProduct;
+			let updatedProduct: CartProduct;
 			if (existingProduct) {
 				updatedProduct = {
 					...existingProduct,
