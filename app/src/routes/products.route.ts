@@ -3,7 +3,7 @@ import {
 	addProduct,
 	renderProduct,
 	renderProducts,
-} from "../controllers/products.controller";
+} from "../controllers/products.controller.js";
 
 const router = express.Router();
 

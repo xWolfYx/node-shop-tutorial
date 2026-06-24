@@ -8,7 +8,7 @@ import {
 	renderCheckout,
 	renderIndex,
 	renderOrders,
-} from "../controllers/shop.controller";
+} from "../controllers/shop.controller.js";
 
 router.get("/", renderIndex);
 

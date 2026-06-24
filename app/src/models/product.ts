@@ -1,8 +1,8 @@
 import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
-import type { ProductData } from "../lib/types";
-import { rootPath } from "../utils/path";
+import type { ProductData } from "../lib/types.js";
+import { rootPath } from "../utils/path.js";
 
 const productFilePath = path.join(rootPath, "data", "products.json");
 

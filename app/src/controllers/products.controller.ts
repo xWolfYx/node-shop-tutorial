@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
-import { findById } from "../lib/utils";
-import { Product } from "../models/product";
+import { findById } from "../lib/utils.js";
+import { Product } from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
 	const products = await Product.fetchAll();

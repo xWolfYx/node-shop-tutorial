@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
-import { findById } from "../lib/utils";
-import { Cart } from "../models/cart";
-import { Product } from "../models/product";
+import { findById } from "../lib/utils.js";
+import { Cart } from "../models/cart.js";
+import { Product } from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
 	res.render("shop/index", {

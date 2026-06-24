@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { CartData, ICart } from "../lib/types";
-import { rootPath } from "../utils/path";
+import type { CartData, ICart } from "../lib/types.js";
+import { rootPath } from "../utils/path.js";
 
 const cartFilePath = path.join(rootPath, "data", "cart.json");
 
