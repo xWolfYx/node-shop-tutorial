@@ -15,7 +15,7 @@ export const renderProducts = async (_: Request, res: Response) => {
 export const renderProduct = async (req: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
-	const product = products.find((p) => findById(req.params.id, p));
+	const product = products.find((p) => findById(req.params.id as string, p));
 	res.render("shop/product-details", {
 		pageTitle: product?.title,
 		path: "/products",
