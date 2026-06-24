@@ -1,14 +1,16 @@
 [
-  {
-    "title": "Book",
-    "imageUrl": "https://google.com/my-book",
-    "description": "Hello, world",
-    "price": "1.22"
-  },
-  {
-    "title": "Random Book",
-    "imageUrl": "https://images.unsplash.com/photo-1541963463532-d68292c34b19?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3xlbnwwfHwwfHx8MA%3D%3D",
-    "description": "Book that makes no sense",
-    "price": "12.99"
-  }
+	{
+		"id": "f12964a8-9787-4900-94af-d2acf953daba",
+		"title": "Random Book",
+		"imageUrl": "https://images.unsplash.com/photo-1541963463532-d68292c34b19?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Ym9va3xlbnwwfHwwfHx8MA%3D%3D",
+		"description": "Book that makes no sense",
+		"price": 1299
+	},
+	{
+		"id": "a9ea7961-0ff2-42dc-93a3-fb88eae35f30",
+		"title": "Bicycle",
+		"imageUrl": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F8f%2F36%2Fdd%2F8f36ddefdd52c7894a9c849a820c2d59.jpg&f=1&nofb=1&ipt=4dfaf94da82abb1dedc50a7533b6cd826998d4a8660df908aac2c69ad921cf79",
+		"description": "Buy!",
+		"price": 20000
+	}
 ]
