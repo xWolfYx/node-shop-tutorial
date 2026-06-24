@@ -1,44 +1,41 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
-  "compilerOptions": {
-    // File Layout
-    // "rootDir": "./src",
-    // "outDir": "./dist",
+	"compilerOptions": {
+		"target": "ES2022",
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
-    "module": "nodenext",
-    "target": "esnext",
-    "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
-    // "types": ["node"],
-    // and npm install -D @types/node
+		// ESM (Modules) for Node
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
 
-    // Other Outputs
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
+		// Project structure
+		"rootDir": "./app/src",
+		"outDir": "./dist",
 
-    // Stricter Typechecking Options
-    "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+		// Type safety
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		"exactOptionalPropertyTypes": true,
 
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
+		// Node environment types
+		"types": ["node"],
 
-    // Recommended Options
-    "strict": true,
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "isolatedModules": true,
-    "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+		// Output behavior
+		"sourceMap": true,
+		"declaration": true,
+		"declarationMap": true,
+
+		// Modern module behavior (important for ESM)
+		"verbatimModuleSyntax": true,
+		"moduleDetection": "force",
+
+		// Good defaults for backend projects
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+
+		// Prevent accidental implicit any in some cases
+		"noImplicitOverride": true,
+		"noFallthroughCasesInSwitch": true
+	},
+
+	"include": ["app/src"],
+	"exclude": ["node_modules", "dist"]
 }
