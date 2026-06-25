@@ -1,0 +1,53 @@
+<%- include("../includes/head.ejs") %>
+
+<body class="page page--form">
+	<%- include("../includes/navigation.ejs") %>
+
+	<main>
+		<div class="container">
+			<form action="/admin/<%= editing ? 'edit-product' : 'add-product' %>" method="POST" class="form">
+				<h1 class="form__title">Add Product</h1>
+				<div class="form__control">
+					<label for="title"
+						>Title
+						<input
+							type="text"
+							name="title"
+							id="title"
+							required
+							placeholder="e.g. Bicycle"
+							value="<%= product ? product.title : '' %>"
+						>
+					</label>
+					<label for="imageUrl"
+						>Image URL<input
+							type="url"
+							name="imageUrl"
+							id="imageUrl"
+							placeholder="e.g. https://example.com/image"
+							value="<%= product ? product.imageUrl : '' %>"
+						>
+					</label>
+					<label for="description"
+						>Description
+						<textarea name="description" id="description" rows="5"
+						><%= product ? product.description : "" %></textarea>
+					</label>
+					<label for="price"
+						>Price<input
+							type="number"
+							name="price"
+							id="price"
+							step="0.01"
+							min="0"
+							required
+							placeholder="e.g. 1.99"
+							value="<%= product ? product.price : '' %>"
+						></label
+					>
+				</div>
+				<button type="submit" class="btn"><%= editing ? 'Update Product' : 'Add Product' %></button>
+			</form>
+		</div>
+	</main>
+</body>

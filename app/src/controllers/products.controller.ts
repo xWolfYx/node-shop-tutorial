@@ -24,8 +24,10 @@ export const renderProduct = async (req: Request, res: Response) => {
 };
 
 export const renderAddProducts = (_: Request, res: Response) => {
-	res.render("admin/add-product", {
+	res.render("admin/edit-product", {
 		pageTitle: "Add Product",
+		product: null,
+		editing: false,
 	});
 };
 
@@ -35,6 +37,21 @@ export const renderAdminProducts = async (_: Request, res: Response) => {
 	res.render("admin/product-list", {
 		products,
 		pageTitle: "Admin - Products",
+	});
+};
+
+export const renderEditProducts = async (req: Request, res: Response) => {
+	const isEdited = req.query.edit;
+
+	const id = req.params.id;
+
+	const products = await Product.fetchAll();
+	const product = products.find((p) => p.id === id);
+
+	res.render("admin/edit-product", {
+		pageTitle: "Edit Product",
+		editing: isEdited,
+		product,
 	});
 };
 
