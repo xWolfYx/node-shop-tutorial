@@ -8,11 +8,12 @@ import {
 
 const router: Router = express.Router();
 
+router.post("/add-product", addProduct);
 router.get("/add-product", renderAddProducts);
+
 router.get("/products", renderAdminProducts);
 
-router.post("/add-product", addProduct);
-
+router.post("/edit-product", editProduct);
 router.get("/edit-product/:id", renderEditProducts);
 
 export { router };
