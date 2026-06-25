@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
-import { findById, toCents, toUSD } from "../lib/utils.js";
+import { toCents, toUSD } from "../lib/utils.js";
 import { Product } from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
@@ -15,7 +15,7 @@ export const renderProducts = async (_: Request, res: Response) => {
 export const renderProduct = async (req: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
-	const product = products.find((p) => findById(req.params.id as string, p));
+	const product = products.find((p) => req.params.id === p.id);
 	res.render("shop/product-details", {
 		pageTitle: product?.title,
 		path: "/products",

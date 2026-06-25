@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import { findById } from "../lib/utils.js";
 import { Cart } from "../models/cart.js";
 import { Product } from "../models/product.js";
 
@@ -18,7 +17,7 @@ export const postCart = async (req: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
 	const { productId } = req.body;
-	const product = products.find((p) => findById(productId, p));
+	const product = products.find((p) => p.id === productId);
 
 	if (!product) return res.status(404).send("Product not found");
 
