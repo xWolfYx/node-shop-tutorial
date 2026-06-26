@@ -66,4 +66,10 @@ export class Product implements ProductData {
 			console.log(err);
 		}
 	}
+
+	static async delete(id: string) {
+		const products = await getData();
+		const updatedProducts = products.filter((p) => p.id !== id);
+		fs.writeFile(productFilePath, JSON.stringify(updatedProducts, null, 2));
+	}
 }

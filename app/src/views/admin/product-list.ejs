@@ -24,7 +24,10 @@
 						</div>
 						<div class="card__actions">
 							<a href="/admin/edit-product/<%= product.id %>?edit=true" class="btn">Edit</a>
-							<button type="button" class="btn">Delete</button>
+							<form action="/admin/delete-product" method="POST" class="btn">
+								<input type="hidden" name="id" value="<%= product.id %>">
+								<button type="submit" style="border:inherit; background-color: inherit; color: inherit; font-weight: inherit;">Delete</button>
+							</form>
 						</div>
 					</article>
 					<% }) %>

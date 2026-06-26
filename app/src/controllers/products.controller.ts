@@ -79,3 +79,9 @@ export const editProduct = (req: Request, res: Response) => {
 	updatedProduct.save();
 	res.redirect("/admin/products");
 };
+
+export const deleteProduct = async (req: Request, res: Response) => {
+	const { id } = req.body;
+	Product.delete(id);
+	res.redirect("/admin/products");
+};
