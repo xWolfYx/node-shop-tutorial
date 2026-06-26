@@ -8,7 +8,7 @@ const productFilePath = path.join(rootPath, "data", "products.json");
 
 const getData = async (): Promise<ProductData[]> => {
 	try {
-		const data = await JSON.parse(await fs.readFile(productFilePath, "utf-8"));
+		const data = JSON.parse(await fs.readFile(productFilePath, "utf-8"));
 		return data;
 	} catch (err) {
 		console.log(err);
