@@ -38,17 +38,30 @@ export class Product implements ProductData {
 		try {
 			const products = await getData();
 
-			this.id = randomUUID();
-			const newProduct = {
-				id: this.id,
-				title: this.title,
-				imageUrl: this.imageUrl,
-				description: this.description,
-				price: this.price,
-			};
+			if (this.id) {
+				const existingProductIndex = products.findIndex(
+					(p) => p.id === this.id,
+				);
 
-			products.push(newProduct);
-			await fs.writeFile(productFilePath, JSON.stringify(products, null, 2));
+				const updatedProducts = [...products];
+				updatedProducts[existingProductIndex] = this;
+				await fs.writeFile(
+					productFilePath,
+					JSON.stringify(updatedProducts, null, 2),
+				);
+			} else {
+				this.id = randomUUID();
+				const newProduct = {
+					id: this.id,
+					title: this.title,
+					imageUrl: this.imageUrl,
+					description: this.description,
+					price: this.price,
+				};
+
+				products.push(newProduct);
+				await fs.writeFile(productFilePath, JSON.stringify(products, null, 2));
+			}
 		} catch (err) {
 			console.log(err);
 		}

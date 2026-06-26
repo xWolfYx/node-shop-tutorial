@@ -70,3 +70,11 @@ export const addProduct = async (req: Request, res: Response) => {
 	}
 	res.redirect("/");
 };
+
+export const editProduct = (req: Request, res: Response) => {
+	const { id, title, imageUrl, description, price } = req.body;
+	const updatedProduct = new Product(id, title, imageUrl, description, price);
+
+	updatedProduct.save();
+	res.redirect("/admin/products");
+};

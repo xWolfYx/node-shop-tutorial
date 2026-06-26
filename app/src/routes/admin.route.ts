@@ -1,6 +1,7 @@
 import express, { type Router } from "express";
 import {
 	addProduct,
+	editProduct,
 	renderAddProducts,
 	renderAdminProducts,
 	renderEditProducts,

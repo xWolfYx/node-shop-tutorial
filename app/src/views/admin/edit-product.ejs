@@ -45,6 +45,9 @@
 							value="<%= product ? product.price : '' %>"
 						></label
 					>
+					<% if (editing) { %>
+						<input type="hidden" name="id" value="<%= product.id %>">
+					<% } %>
 				</div>
 				<button type="submit" class="btn"><%= editing ? 'Update Product' : 'Add Product' %></button>
 			</form>
