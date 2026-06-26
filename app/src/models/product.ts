@@ -67,7 +67,7 @@ export class Product implements ProductData {
 		}
 	}
 
-	static async delete(id: string) {
+	static async delete(id: string): Promise<void> {
 		const products = await getData();
 		const updatedProducts = products.filter((p) => p.id !== id);
 		fs.writeFile(productFilePath, JSON.stringify(updatedProducts, null, 2));
