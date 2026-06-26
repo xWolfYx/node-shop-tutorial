@@ -37,12 +37,9 @@ export class Product implements ProductData {
 	async save(): Promise<void> {
 		try {
 			const products = await getData();
+			const existingProductIndex = products.findIndex((p) => p.id === this.id);
 
-			if (this.id) {
-				const existingProductIndex = products.findIndex(
-					(p) => p.id === this.id,
-				);
-
+			if (existingProductIndex !== -1) {
 				const updatedProducts = [...products];
 				updatedProducts[existingProductIndex] = this;
 				await fs.writeFile(
