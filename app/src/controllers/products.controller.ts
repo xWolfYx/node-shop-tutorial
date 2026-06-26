@@ -32,7 +32,8 @@ export const renderAddProducts = (_: Request, res: Response) => {
 };
 
 export const renderAdminProducts = async (_: Request, res: Response) => {
-	const products = await Product.fetchAll();
+	const rawProducts = await Product.fetchAll();
+	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
 
 	res.render("admin/product-list", {
 		products,
