@@ -75,7 +75,13 @@ export const addProduct = async (req: Request, res: Response) => {
 
 export const editProduct = (req: Request, res: Response) => {
 	const { id, title, imageUrl, description, price } = req.body;
-	const updatedProduct = new Product(id, title, imageUrl, description, price);
+	const updatedProduct = new Product(
+		id,
+		title,
+		imageUrl,
+		description,
+		toCents(price),
+	);
 
 	updatedProduct.save();
 	res.redirect("/admin/products");
