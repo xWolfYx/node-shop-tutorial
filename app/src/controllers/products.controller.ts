@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
 import { toCents, toUSD } from "../lib/utils.js";
+import { removeFromCart } from "../models/cart.js";
 import { Product } from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
@@ -80,8 +81,15 @@ export const editProduct = (req: Request, res: Response) => {
 	res.redirect("/admin/products");
 };
 
-export const deleteProduct = (req: Request, res: Response) => {
+export const deleteProduct = async (req: Request, res: Response) => {
 	const { id } = req.body;
+	const products = await Product.fetchAll();
+	const product = products.find((p) => p.id === id);
+
+	if (!product) return;
+
 	Product.delete(id);
+	await removeFromCart(id, product.price);
+
 	res.redirect("/admin/products");
 };

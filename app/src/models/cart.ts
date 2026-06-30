@@ -35,5 +35,23 @@ export class Cart implements ICart {
 		} catch (err) {
 			console.log(err);
 		}
+}
+
+export async function removeFromCart(id: string, productPrice: number) {
+	try {
+		const cartData = await fs.readFile(cartFilePath, "utf-8");
+		const cart: CartData = cartData.trim()
+			? JSON.parse(cartData)
+			: { products: [], totalPrice: 0 };
+
+		const product = cart.products.find((p) => p.id === id);
+		if (!product) return;
+
+		cart.totalPrice = cart.totalPrice - productPrice * product.quantity;
+		cart.products = cart.products.filter((p) => p.id !== id);
+
+		await fs.writeFile(cartFilePath, JSON.stringify(cart, null, 2));
+	} catch (err) {
+		console.log(err);
 	}
 }
