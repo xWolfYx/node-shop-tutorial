@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { Cart } from "../models/cart.js";
+import { addToCart } from "../models/cart.js";
 import { Product } from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
@@ -13,7 +13,6 @@ export const renderCart = (_: Request, res: Response) => {
 };
 
 export const postCart = async (req: Request, res: Response) => {
-	const cart = new Cart();
 	const products = await Product.fetchAll();
 
 	const { productId } = req.body;
@@ -21,7 +20,7 @@ export const postCart = async (req: Request, res: Response) => {
 
 	if (!product) return res.status(404).send("Product not found");
 
-	cart.addToCart(product?.id, Number(product?.price));
+	addToCart(product.id, Number(product.price));
 	res.redirect("/cart");
 };
 
