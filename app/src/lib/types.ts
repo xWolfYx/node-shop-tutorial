@@ -15,7 +15,3 @@ export interface CartData {
 	products: CartProduct[];
 	totalPrice: number;
 }
-
-export interface ICart {
-	addToCart(id: string, productPrice: number): void;
-}
