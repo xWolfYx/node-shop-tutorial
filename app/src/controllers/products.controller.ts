@@ -80,7 +80,7 @@ export const editProduct = (req: Request, res: Response) => {
 	res.redirect("/admin/products");
 };
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProduct = (req: Request, res: Response) => {
 	const { id } = req.body;
 	Product.delete(id);
 	res.redirect("/admin/products");
