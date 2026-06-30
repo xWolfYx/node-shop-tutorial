@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "node:fs/promises";
 import path from "node:path";
 import type { CartData, CartProduct, ICart } from "../lib/types.js";
 import { rootPath } from "../utils/path.js";
@@ -6,22 +6,18 @@ import { rootPath } from "../utils/path.js";
 const cartFilePath = path.join(rootPath, "data", "cart.json");
 
 export class Cart implements ICart {
-	addToCart(id: string, productPrice: number) {
-		fs.readFile(cartFilePath, "utf-8", (err, cartItems) => {
+	async addToCart(id: string, productPrice: number) {
+		try {
+			const cartItems = await fs.readFile(cartFilePath, "utf-8");
 			let cart: CartData = { products: [], totalPrice: 0 };
 
-			if (!err && cartItems.trim()) {
-				try {
-					cart = JSON.parse(cartItems);
-				} catch (err) {
-					console.log(err);
-				}
-			}
+			if (!cartItems.trim()) cart = JSON.parse(cartItems);
+			cart = JSON.parse(cartItems);
 
 			const existingProductIndex = cart.products.findIndex((p) => p.id === id);
 			const existingProduct = cart.products[existingProductIndex];
-
 			let updatedProduct: CartProduct;
+
 			if (existingProduct) {
 				updatedProduct = {
 					...existingProduct,
@@ -35,10 +31,9 @@ export class Cart implements ICart {
 			}
 			cart.totalPrice += productPrice;
 
-			fs.writeFile(cartFilePath, JSON.stringify(cart, null, 2), (err) => {
-				if (err) console.log(`Error in addToCart: ${err.message}`);
-				console.log("Cart item added successfully");
-			});
-		});
+			await fs.writeFile(cartFilePath, JSON.stringify(cart, null, 2));
+		} catch (err) {
+			console.log(err);
+		}
 	}
 }
