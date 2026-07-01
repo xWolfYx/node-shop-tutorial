@@ -1,5 +1,7 @@
 import type { Request, Response } from "express";
-import { addToCart } from "../models/cart.js";
+import type { CartData } from "../lib/types.js";
+import { toUSD } from "../lib/utils.js";
+import { addToCart as addItemToCart, fetchCart } from "../models/cart.js";
 import { Product } from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
@@ -33,7 +35,7 @@ export const renderCart = async (_: Request, res: Response) => {
 	});
 };
 
-export const postCart = async (req: Request, res: Response) => {
+export const addToCart = async (req: Request, res: Response) => {
 	const products = await Product.fetchAll();
 
 	const { productId } = req.body;
@@ -41,7 +43,7 @@ export const postCart = async (req: Request, res: Response) => {
 
 	if (!product) return res.status(404).send("Product not found");
 
-	addToCart(product.id, Number(product.price));
+	addItemToCart(product.id, Number(product.price));
 	res.redirect("/cart");
 };
 
