@@ -8,8 +8,29 @@ export const renderIndex = async (_: Request, res: Response) => {
 	});
 };
 
-export const renderCart = (_: Request, res: Response) => {
-	res.render("shop/cart", { pageTitle: "Cart" });
+export const renderCart = async (_: Request, res: Response) => {
+	const cart: CartData = await fetchCart();
+	const products = await Product.fetchAll();
+
+	if (!cart.products) return null;
+
+	const cartProducts = cart.products.map((cp) => {
+		const product = products.find((p) => p.id === cp.id);
+
+		if (!product) return null;
+
+		return {
+			...product,
+			quantity: cp.quantity ?? 0,
+			price: toUSD(product.price),
+		};
+	});
+
+	res.render("shop/cart", {
+		pageTitle: "Cart",
+		products: cartProducts,
+		totalPrice: toUSD(cart.totalPrice),
+	});
 };
 
 export const postCart = async (req: Request, res: Response) => {
