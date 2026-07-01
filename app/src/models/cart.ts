@@ -5,6 +5,18 @@ import { rootPath } from "../utils/path.js";
 
 const cartFilePath = path.join(rootPath, "data", "cart.json");
 
+export const fetchCart = async () => {
+	try {
+		const data = await fs.readFile(cartFilePath, "utf-8");
+		if (!data) return { products: [], totalPrice: 0 };
+
+		return JSON.parse(data);
+	} catch (err) {
+		console.log(err);
+		return { products: [], totalPrice: 0 };
+	}
+};
+
 export async function addToCart(id: string, productPrice: number) {
 	let cart: CartData = { products: [], totalPrice: 0 };
 
