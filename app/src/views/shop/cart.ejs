@@ -3,9 +3,45 @@
 <body>
 	<%- include("../includes/navigation.ejs") %>
 
-	<main>
+  <main>
 		<div class="container">
-			<h1>Cart</h1>
-		</div>
-	</main>
+			<section class="cart">
+      	<h1 class="cart__title">Shopping Cart</h1>
+
+        <% if (products.length) { %>
+				<ul class="cart__list">
+					<% products.forEach(p => { %>
+          <li class="cart__item">
+            <img
+              class="cart__image"
+              src="<%= p.imageUrl %>"
+              alt="<%= p.title %>"
+            >
+
+            <div class="cart__details">
+              <h2 class="cart__name"><%= p.title %></h2>
+              <span class="cart__price"><%= p.price %></span>
+              <span class="cart__quantity">
+                Quantity: <%= p.quantity %>
+              </span>
+            </div>
+            <form action="/" method="POST">
+              <button type="submit">Delete</button>
+            </form>
+					</li>
+				<% }) %>
+      </ul>
+
+     	 <div class="cart__footer">
+					<span>Total</span>
+					<strong><%= totalPrice %></strong>
+     	 </div>
+       <% } else { %>
+        <div>
+          <h1>No items in the cart!</h1>
+        </div>
+       <% } %>
+      </section>
+    </div>
+  </main>
 </body>
