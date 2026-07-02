@@ -3,7 +3,8 @@ import express, { type Router } from "express";
 const router: Router = express.Router();
 
 import {
-	postCart,
+	addToCart,
+	removeFromCart,
 	renderCart,
 	renderCheckout,
 	renderIndex,
@@ -13,7 +14,8 @@ import {
 router.get("/", renderIndex);
 
 router.get("/cart", renderCart);
-router.post("/cart", postCart);
+router.post("/cart", addToCart);
+router.post("/cart/cart-delete-item", removeFromCart);
 
 router.get("/orders", renderOrders);
 router.get("/checkout", renderCheckout);
