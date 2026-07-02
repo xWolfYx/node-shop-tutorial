@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import type { ProductData } from "../lib/types.js";
+import db from "../utils/db.js";
 import { rootPath } from "../utils/path.js";
 
 const productFilePath = path.join(rootPath, "data", "products.json");
@@ -26,42 +27,8 @@ export class Product implements ProductData {
 	) {}
 
 	static async fetchAll(): Promise<ProductData[]> {
-		try {
-			return getData();
-		} catch (err) {
-			console.log(err);
-			return [];
-		}
-	}
-
-	async save(): Promise<void> {
-		try {
-			const products = await getData();
-			const existingProductIndex = products.findIndex((p) => p.id === this.id);
-
-			if (existingProductIndex !== -1) {
-				const updatedProducts = [...products];
-				updatedProducts[existingProductIndex] = this;
-				await fs.writeFile(
-					productFilePath,
-					JSON.stringify(updatedProducts, null, 2),
-				);
-			} else {
-				this.id = randomUUID();
-				const newProduct = {
-					id: this.id,
-					title: this.title,
-					imageUrl: this.imageUrl,
-					description: this.description,
-					price: this.price,
-				};
-
-				products.push(newProduct);
-				await fs.writeFile(productFilePath, JSON.stringify(products, null, 2));
-			}
-		} catch (err) {
-			console.log(err);
-		}
+		const [rows] = await db.execute(`SELECT * FROM products`);
+		return rows as ProductData[];
 	}
 
 	static async delete(id: string): Promise<void> {
