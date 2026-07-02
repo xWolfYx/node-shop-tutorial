@@ -9,7 +9,10 @@ import {
 import { Product } from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
+	const rawProducts = await Product.fetchAll();
+	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
 	res.render("shop/index", {
+		products,
 		pageTitle: "Shop",
 	});
 };
