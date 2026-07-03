@@ -54,13 +54,20 @@ export const renderAddProducts = (_: Request, res: Response) => {
 };
 
 export const renderAdminProducts = async (_: Request, res: Response) => {
-	const rawProducts = await Product.fetchAll();
-	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
+	try {
+		const rawProducts = await Product.findAll();
+		const products = rawProducts.map((p) => ({
+			...p.get({ plain: true }),
+			price: toUSD(p.price),
+		}));
 
 	res.render("admin/product-list", {
 		products,
 		pageTitle: "Admin - Products",
 	});
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 export const renderEditProducts = async (req: Request, res: Response) => {
