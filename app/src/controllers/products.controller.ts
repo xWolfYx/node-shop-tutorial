@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
+import { toUSD } from "../lib/utils.js";
 import Product from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
