@@ -3,12 +3,19 @@ import type { Request, Response } from "express";
 import Product from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
-	const rawProducts = await Product.fetchAll();
-	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
+	try {
+		const rawProducts = await Product.findAll();
+		const products = rawProducts.map((p) => ({
+			...p.get({ plain: true }),
+			price: toUSD(p.price),
+		}));
 	res.render("shop/product-list", {
 		products,
 		pageTitle: "Products",
 	});
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 export const renderProduct = async (req: Request, res: Response) => {
