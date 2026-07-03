@@ -19,14 +19,30 @@ export const renderProducts = async (_: Request, res: Response) => {
 };
 
 export const renderProduct = async (req: Request, res: Response) => {
-	const products = await Product.fetchAll();
+	const id = req.params.id as string;
 
-	const product = products.find((p) => req.params.id === p.id);
+	if (!id) return res.redirect("/");
+
+	try {
+		const rawProduct = await Product.findByPk(id);
+
+		if (!rawProduct) return res.redirect("/");
+
+		const product = {
+			...rawProduct.get({ plain: true }),
+			price: toUSD(rawProduct.price),
+		};
+		console.log(product);
+
 	res.render("shop/product-details", {
-		pageTitle: product?.title,
+			pageTitle: product.title,
 		path: "/products",
 		product,
 	});
+	} catch (err) {
+		console.log(err);
+		res.status(500).redirect("/");
+	}
 };
 
 export const renderAddProducts = (_: Request, res: Response) => {
