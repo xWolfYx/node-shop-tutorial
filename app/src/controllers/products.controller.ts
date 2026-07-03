@@ -114,17 +114,13 @@ export const addProduct = async (req: Request, res: Response) => {
 	}
 };
 
-export const editProduct = (req: Request, res: Response) => {
+export const editProduct = async (req: Request, res: Response) => {
 	const { id, title, imageUrl, description, price } = req.body;
-	const updatedProduct = new Product(
-		id,
-		title,
-		imageUrl,
-		description,
-		toCents(price),
-	);
 
-	updatedProduct.save();
+	await Product.update(
+		{ title, imageUrl, description, price: price * 100 },
+		{ where: { id } },
+	);
 	res.redirect("/admin/products");
 };
 
