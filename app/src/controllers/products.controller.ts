@@ -10,10 +10,10 @@ export const renderProducts = async (_: Request, res: Response) => {
 			...p.get({ plain: true }),
 			price: toUSD(p.price),
 		}));
-	res.render("shop/product-list", {
-		products,
-		pageTitle: "Products",
-	});
+		res.render("shop/product-list", {
+			products,
+			pageTitle: "Products",
+		});
 	} catch (err) {
 		console.log(err);
 	}
@@ -35,11 +35,11 @@ export const renderProduct = async (req: Request, res: Response) => {
 		};
 		console.log(product);
 
-	res.render("shop/product-details", {
+		res.render("shop/product-details", {
 			pageTitle: product.title,
-		path: "/products",
-		product,
-	});
+			path: "/products",
+			product,
+		});
 	} catch (err) {
 		console.log(err);
 		res.status(500).redirect("/");
@@ -62,10 +62,10 @@ export const renderAdminProducts = async (_: Request, res: Response) => {
 			price: toUSD(p.price),
 		}));
 
-	res.render("admin/product-list", {
-		products,
-		pageTitle: "Admin - Products",
-	});
+		res.render("admin/product-list", {
+			products,
+			pageTitle: "Admin - Products",
+		});
 	} catch (err) {
 		console.log(err);
 	}
@@ -84,11 +84,11 @@ export const renderEditProducts = async (req: Request, res: Response) => {
 			price: rawProduct.price / 100,
 		};
 
-	res.render("admin/edit-product", {
-		pageTitle: "Edit Product",
-		editing: isEdited,
-		product,
-	});
+		res.render("admin/edit-product", {
+			pageTitle: "Edit Product",
+			editing: isEdited,
+			product,
+		});
 	} catch (err) {
 		console.log("Product doesn't exist or there is another error", err);
 	}
@@ -134,7 +134,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 		await Product.destroy({ where: { id } });
 		// await removeFromCart(id, product.price);
 
-	res.redirect("/admin/products");
+		res.redirect("/admin/products");
 	} catch (err) {
 		console.log(err);
 	}
