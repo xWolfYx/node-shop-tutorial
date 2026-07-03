@@ -126,13 +126,15 @@ export const editProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
 	const { id } = req.body;
-	const products = await Product.fetchAll();
-	const product = products.find((p) => p.id === id);
 
-	if (!product) return;
+	if (!id) return;
 
-	Product.delete(id);
-	await removeFromCart(id, product.price);
+	try {
+		await Product.destroy({ where: { id } });
+		// await removeFromCart(id, product.price);
 
 	res.redirect("/admin/products");
+	} catch (err) {
+		console.log(err);
+	}
 };
