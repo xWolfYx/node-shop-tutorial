@@ -99,7 +99,7 @@ export const addProduct = async (req: Request, res: Response) => {
 		const id = randomUUID();
 
 		try {
-			Product.create({ id, title, imageUrl, description, price });
+				price: price * 100,
 		} catch (err) {
 			console.log(err);
 			return res.redirect("/admin/add-product");
