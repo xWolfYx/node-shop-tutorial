@@ -72,17 +72,25 @@ export const renderAdminProducts = async (_: Request, res: Response) => {
 
 export const renderEditProducts = async (req: Request, res: Response) => {
 	const isEdited = req.query.edit;
+	const id = req.params.id as string;
+	try {
+		const rawProduct = await Product.findByPk(id);
 
-	const id = req.params.id;
+		if (!rawProduct) return res.redirect("/");
 
-	const products = await Product.fetchAll();
-	const product = products.find((p) => p.id === id);
+		const product = {
+			...rawProduct.get({ plain: true }),
+			price: rawProduct.price / 100,
+		};
 
 	res.render("admin/edit-product", {
 		pageTitle: "Edit Product",
 		editing: isEdited,
 		product,
 	});
+	} catch (err) {
+		console.log("Product doesn't exist or there is another error", err);
+	}
 };
 
 export const addProduct = async (req: Request, res: Response) => {
