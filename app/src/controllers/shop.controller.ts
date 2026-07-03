@@ -9,12 +9,20 @@ import {
 import { Product } from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
-	const rawProducts = await Product.fetchAll();
-	const products = rawProducts.map((p) => ({ ...p, price: toUSD(p.price) }));
-	res.render("shop/index", {
-		products,
-		pageTitle: "Shop",
-	});
+	try {
+		const rawProducts = await Product.findAll();
+		const products = rawProducts.map((p) => ({
+			...p.get({ plain: true }),
+			price: toUSD(p.price),
+		}));
+
+		res.render("shop/index", {
+			products: products.length ? products : [],
+			pageTitle: "Shop",
+		});
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 export const renderCart = async (_: Request, res: Response) => {
