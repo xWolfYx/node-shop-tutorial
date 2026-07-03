@@ -99,13 +99,19 @@ export const addProduct = async (req: Request, res: Response) => {
 		const id = randomUUID();
 
 		try {
+			await Product.create({
+				id,
+				title,
+				imageUrl,
+				description,
 				price: price * 100,
+			});
+			res.redirect("/admin/products");
 		} catch (err) {
 			console.log(err);
-			return res.redirect("/admin/add-product");
+			res.redirect("/admin/add-product");
 		}
 	}
-	res.redirect("/");
 };
 
 export const editProduct = (req: Request, res: Response) => {
