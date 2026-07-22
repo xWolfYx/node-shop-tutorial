@@ -100,13 +100,15 @@ export const addProduct = async (req: Request, res: Response) => {
 		const id = randomUUID();
 
 		try {
-			await Product.create({
+			await req.user.createProduct({
 				id,
 				title,
 				imageUrl,
 				description,
 				price: price * 100,
+				userId: req.user.id,
 			});
+
 			res.redirect("/admin/products");
 		} catch (err) {
 			console.log(err);
