@@ -25,29 +25,33 @@ export const renderIndex = async (_: Request, res: Response) => {
 	}
 };
 
-export const renderCart = async (_: Request, res: Response) => {
-	const cart: CartData = await fetchCart();
-	const products = await Product.fetchAll();
+export const renderCart = async (req: Request, res: Response) => {
+	try {
+		const cart: CartData = await req.user.getCart();
+		const rawProducts = await cart.getProducts();
 
-	if (!cart.products) return null;
+		const products = rawProducts.map((p) => ({
+			...p.get({ raw: true }),
+			price: toUSD(p.price),
+		}));
 
-	const cartProducts = cart.products.map((cp) => {
-		const product = products.find((p) => p.id === cp.id);
+		res.render("shop/cart", {
+			pageTitle: "Cart",
+			products,
+			totalPrice: toUSD(cart.totalPrice),
+		});
+	} catch (err) {
+		console.log(err);
+	}
 
-		if (!product) return null;
+	// 	return {
+	// 		...product,
+	// 		quantity: cp.quantity ?? 0,
+	// 		price: toUSD(product.price),
+	// 	};
+	// });
 
-		return {
-			...product,
-			quantity: cp.quantity ?? 0,
-			price: toUSD(product.price),
-		};
-	});
-
-	res.render("shop/cart", {
-		pageTitle: "Cart",
-		products: cartProducts,
-		totalPrice: toUSD(cart.totalPrice),
-	});
+	// });
 };
 
 export const addToCart = async (req: Request, res: Response) => {
