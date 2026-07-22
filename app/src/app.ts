@@ -1,12 +1,14 @@
 import path from "node:path";
-import express from "express";
-
+import express, {
+	type NextFunction,
+	type Request,
+	type Response,
+} from "express";
 import { renderNotfoundPage } from "./controllers/notfound.controller.js";
 import { router as adminRouter } from "./routes/admin.route.js";
 import { router as productRouter } from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
-import { randomUUID } from "node:crypto";
 import Cart from "./models/cart.js";
 import CartItem from "./models/cart-item.js";
 import Product from "./models/product.js";
@@ -14,7 +16,8 @@ import User from "./models/user.js";
 import sequelize from "./utils/db.js";
 import { rootPath } from "./utils/path.js";
 
-const PORT = 3000;
+const PORT = 8000;
+const DUMMY_USER_ID = "a6296334-b56d-465d-a7bf-6da234b9e0a7";
 
 const app = express();
 
@@ -27,6 +30,16 @@ app.use(express.static(`${rootPath}/public`));
 app.use((req, res, next) => {
 	res.locals.path = req.path;
 	next();
+});
+
+app.use(async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		(req as any).user = await User.findByPk(DUMMY_USER_ID);
+
+		next();
+	} catch (err) {
+		next(err);
+	}
 });
 
 app.use("/admin", adminRouter);
@@ -45,8 +58,23 @@ try {
 
 	Cart.belongsToMany(Product, { through: CartItem });
 	Product.belongsToMany(Cart, { through: CartItem });
-	sequelize.sync();
+	await sequelize.sync();
 
+	let user = await User.findByPk(DUMMY_USER_ID);
+
+	if (!user) {
+		user = await User.create({
+			id: DUMMY_USER_ID,
+			name: "David",
+			email: "david@email.com",
+		});
+	}
+
+	const cart = await user.getCart();
+
+	if (!cart) {
+		await user.createCart();
+	}
 
 	app.listen(PORT, () =>
 		console.log(`App is running on http://localhost:${PORT}`),
