@@ -54,9 +54,9 @@ export const renderAddProducts = (_: Request, res: Response) => {
 	});
 };
 
-export const renderAdminProducts = async (_: Request, res: Response) => {
+export const renderAdminProducts = async (req: Request, res: Response) => {
 	try {
-		const rawProducts = await Product.findAll();
+		const rawProducts = await req.user.getProducts();
 		const products = rawProducts.map((p) => ({
 			...p.get({ plain: true }),
 			price: toUSD(p.price),
