@@ -74,6 +74,7 @@ export const renderAdminProducts = async (req: Request, res: Response) => {
 export const renderEditProducts = async (req: Request, res: Response) => {
 	const isEdited = req.query.edit;
 	const id = req.params.id as string;
+
 	try {
 		const rawProduct = await Product.findByPk(id);
 
