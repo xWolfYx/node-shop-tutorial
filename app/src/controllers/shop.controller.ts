@@ -43,15 +43,6 @@ export const renderCart = async (req: Request, res: Response) => {
 	} catch (err) {
 		console.log(err);
 	}
-
-	// 	return {
-	// 		...product,
-	// 		quantity: cp.quantity ?? 0,
-	// 		price: toUSD(product.price),
-	// 	};
-	// });
-
-	// });
 };
 
 export const addToCart = async (req: Request, res: Response) => {
