@@ -55,15 +55,30 @@ export const renderCart = async (req: Request, res: Response) => {
 };
 
 export const addToCart = async (req: Request, res: Response) => {
-	const products = await Product.fetchAll();
+	try {
+		const { productId } = req.body;
+		const cart = await req.user.getCart();
 
-	const { productId } = req.body;
-	const product = products.find((p) => p.id === productId);
+		const existingProducts = await cart.getProducts({
+			where: { id: productId },
+		});
 
-	if (!product) return res.status(404).send("Product not found");
+		let product = existingProducts.length > 0 ? existingProducts[0] : null;
 
-	addItemToCart(product.id, Number(product.price));
-	res.redirect("/cart");
+		if (product) {
+			const { cartItem } = product;
+			cartItem.quantity += 1;
+			await cartItem.save();
+		} else {
+			const newProduct = await Product.findByPk(productId);
+			if (!newProduct) return res.status(404).send("Product not found");
+			await cart.addProduct(newProduct, { through: { quantity: 1 } });
+		}
+
+		res.redirect("/cart");
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 export const removeFromCart = async (req: Request, res: Response) => {
