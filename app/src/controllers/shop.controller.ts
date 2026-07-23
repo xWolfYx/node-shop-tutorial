@@ -27,7 +27,7 @@ export const renderIndex = async (_: Request, res: Response) => {
 
 export const renderCart = async (req: Request, res: Response) => {
 	try {
-		const cart: CartData = await req.user.getCart();
+		const cart = await req.user.getCart();
 		const rawProducts = await cart.getProducts();
 
 		const products = rawProducts.map((p) => ({
