@@ -7,9 +7,10 @@ export const renderProducts = async (_: Request, res: Response) => {
 	try {
 		const rawProducts = await Product.findAll();
 		const products = rawProducts.map((p) => ({
-			...p.get({ plain: true }),
+			...p.toJSON(),
 			price: toUSD(p.price),
 		}));
+
 		res.render("shop/product-list", {
 			products,
 			pageTitle: "Products",
@@ -30,7 +31,7 @@ export const renderProduct = async (req: Request, res: Response) => {
 		if (!rawProduct) return res.redirect("/");
 
 		const product = {
-			...rawProduct.get({ plain: true }),
+			...rawProduct.toJSON(),
 			price: toUSD(rawProduct.price),
 		};
 		console.log(product);
@@ -58,7 +59,7 @@ export const renderAdminProducts = async (req: Request, res: Response) => {
 	try {
 		const rawProducts = await req.user.getProducts();
 		const products = rawProducts.map((p) => ({
-			...p.get({ plain: true }),
+			...p.toJSON(),
 			price: toUSD(p.price),
 		}));
 
@@ -81,7 +82,7 @@ export const renderEditProducts = async (req: Request, res: Response) => {
 		if (!rawProduct) return res.redirect("/");
 
 		const product = {
-			...rawProduct.get({ plain: true }),
+			...rawProduct.toJSON(),
 			price: rawProduct.price / 100,
 		};
 

@@ -12,7 +12,7 @@ export const renderIndex = async (_: Request, res: Response) => {
 	try {
 		const rawProducts = await Product.findAll();
 		const products = rawProducts.map((p) => ({
-			...p.get({ plain: true }),
+			...p.toJSON(),
 			price: toUSD(p.price),
 		}));
 
@@ -31,7 +31,7 @@ export const renderCart = async (req: Request, res: Response) => {
 		const rawProducts = await cart.getProducts();
 
 		const products = rawProducts.map((p) => ({
-			...p.get({ raw: true }),
+			...p.toJSON(),
 			price: toUSD(p.price),
 		}));
 
