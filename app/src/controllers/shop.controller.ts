@@ -1,11 +1,5 @@
 import type { Request, Response } from "express";
-import type { CartData } from "../lib/types.js";
 import { toUSD } from "../lib/utils.js";
-import {
-	addToCart as addItemToCart,
-	fetchCart,
-	removeFromCart as removeItemFromCart,
-} from "../models/cart.js";
 import Product from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
