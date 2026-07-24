@@ -86,16 +86,13 @@ export const addToCart = async (req: Request, res: Response) => {
 
 export const removeFromCart = async (req: Request, res: Response) => {
 	try {
-		const products = await Product.fetchAll();
-		const id = req.body.id;
+		const cart = await req.user.getCart();
+		const { id } = req.body;
 
-		if (req.body.id) {
-			const product = products.find((p) => p.id === id);
+		const product = await cart.getProducts({ where: { id } });
 
-			if (!product) return res.redirect("/cart");
+		if (await product[0].cartItem) await product[0].cartItem.destroy();
 
-			await removeItemFromCart(id, product.price);
-		}
 		res.redirect("/cart");
 	} catch (err) {
 		console.log(err);
