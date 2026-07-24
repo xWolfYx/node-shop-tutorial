@@ -6,6 +6,7 @@ import express, {
 } from "express";
 import { renderNotfoundPage } from "./controllers/notfound.controller.js";
 import adminRouter from "./routes/admin.route.js";
+import orderRouter from "./routes/order.route.js";
 import productRouter from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
@@ -48,6 +49,7 @@ app.use("/admin", adminRouter);
 
 app.use(shopRouter);
 app.use(productRouter);
+app.use(orderRouter);
 
 app.use(renderNotfoundPage);
 
