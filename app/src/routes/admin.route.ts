@@ -20,4 +20,4 @@ router.get("/edit-product/:id", renderEditProducts);
 
 router.post("/delete-product", deleteProduct);
 
-export { router };
+export default router;

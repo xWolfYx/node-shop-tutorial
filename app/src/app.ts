@@ -5,8 +5,8 @@ import express, {
 	type Response,
 } from "express";
 import { renderNotfoundPage } from "./controllers/notfound.controller.js";
-import { router as adminRouter } from "./routes/admin.route.js";
-import { router as productRouter } from "./routes/products.route.js";
+import adminRouter from "./routes/admin.route.js";
+import productRouter from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
 import Cart from "./models/cart.js";
