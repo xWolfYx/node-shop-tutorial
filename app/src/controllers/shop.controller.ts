@@ -66,7 +66,7 @@ export const addToCart = async (req: Request, res: Response) => {
 			where: { id: productId },
 		});
 
-		let product = existingProducts.length > 0 ? existingProducts[0] : null;
+		const product = existingProducts.length > 0 ? existingProducts[0] : null;
 
 		if (product) {
 			const { cartItem } = product;
