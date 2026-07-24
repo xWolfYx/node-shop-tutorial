@@ -1,4 +1,6 @@
 import type { Request, Response } from "express";
+import { Sequelize } from "sequelize";
+import type { ProductData } from "../lib/types.js";
 import { toUSD } from "../lib/utils.js";
 import Product from "../models/product.js";
 
@@ -24,7 +26,23 @@ export const renderCart = async (req: Request, res: Response) => {
 		const cart = await req.user.getCart();
 		const rawProducts = await cart.getProducts();
 
-		const products = rawProducts.map((p) => ({
+		const totalResult = await cart.getProducts({
+			attributes: [
+				[
+					Sequelize.fn(
+						"SUM",
+						Sequelize.literal("`product`.`price` * `cartItem`.`quantity`"),
+					),
+					"totalPrice",
+				],
+			],
+			joinTableAttributes: [],
+			raw: true,
+		});
+
+		const rawTotal = Number(totalResult[0]?.totalPrice) || 0;
+
+		const products: ProductData[] = rawProducts.map((p) => ({
 			...p.toJSON(),
 			price: toUSD(p.price),
 		}));
@@ -32,7 +50,7 @@ export const renderCart = async (req: Request, res: Response) => {
 		res.render("shop/cart", {
 			pageTitle: "Cart",
 			products,
-			totalPrice: toUSD(cart.totalPrice),
+			totalPrice: toUSD(rawTotal),
 		});
 	} catch (err) {
 		console.log(err);
