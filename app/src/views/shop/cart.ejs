@@ -29,19 +29,22 @@
               <input type="hidden" name="id" value="<%= p.id %>">
               <button type="submit">Delete</button>
             </form>
-					</li>
-				<% }) %>
-      </ul>
+          </li>
+          <% }) %>
+        </ul>
 
-     	 <div class="cart__footer">
-					<span>Total</span>
-					<strong><%= totalPrice %></strong>
-     	 </div>
-       <% } else { %>
+        <div class="cart__footer">
+          <span>Total</span>
+          <strong><%= totalPrice %></strong>
+        </div>
+        <form action="/submit-order" method="POST">
+         <button type="submit" class="btn">Order Now!</button>
+         </form>
+        <% } else { %>
         <div>
           <h1>No items in the cart!</h1>
         </div>
-       <% } %>
+        <% } %>
       </section>
     </div>
   </main>
