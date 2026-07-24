@@ -22,7 +22,7 @@
               <h2 class="cart__name"><%= p.title %></h2>
               <span class="cart__price"><%= p.price %></span>
               <span class="cart__quantity">
-                Quantity: <%= p.quantity %>
+                Quantity: <%= p.cartItem.quantity %>
               </span>
             </div>
             <form action="/cart/cart-delete-item" method="POST">
