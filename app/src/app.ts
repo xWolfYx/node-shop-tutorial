@@ -10,6 +10,7 @@ import orderRouter from "./routes/order.route.js";
 import productRouter from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
+import cartRouter from "../src/routes/cart.route.js";
 import Cart from "./models/cart.js";
 import CartItem from "./models/cart-item.js";
 import Order from "./models/order.js";
@@ -46,10 +47,10 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use("/admin", adminRouter);
-
-app.use(shopRouter);
-app.use(productRouter);
+app.use(cartRouter);
 app.use(orderRouter);
+app.use(productRouter);
+app.use(shopRouter);
 
 app.use(renderNotfoundPage);
 
