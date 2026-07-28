@@ -1,8 +1,24 @@
 import type { Request, Response } from "express";
 
 export const submitOrder = async (req: Request, res: Response) => {
-	console.log(req.user);
-	res.redirect("/orders");
+	try {
+		const cart = await req.user.getCart();
+		const products = await cart.getProducts();
+
+		const order = await req.user.createOrder();
+
+		await order.addProducts(
+			products.map((p) => {
+				p.orderItem = { quantity: p.cartItem.quantity };
+				return p;
+			}),
+		);
+
+		await cart.setProducts(null);
+		res.redirect("/orders");
+	} catch (err) {
+		console.log(err);
+	}
 };
 
 export const renderOrders = (_: Request, res: Response) => {
