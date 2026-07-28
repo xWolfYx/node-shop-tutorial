@@ -8,6 +8,7 @@ const orderItem = sequelize.define("orderItem", {
 		primaryKey: true,
 		allowNull: false,
 	},
+	quantity: DataTypes.INTEGER,
 });
 
 export default orderItem;
