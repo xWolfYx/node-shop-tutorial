@@ -136,7 +136,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 	try {
 		await Product.destroy({ where: { id } });
-		// await removeFromCart(id, product.price);
 
 		res.redirect("/admin/products");
 	} catch (err) {
