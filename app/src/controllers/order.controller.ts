@@ -21,6 +21,13 @@ export const submitOrder = async (req: Request, res: Response) => {
 	}
 };
 
-export const renderOrders = (_: Request, res: Response) => {
-	res.render("shop/orders", { pageTitle: "Orders" });
+export const renderOrders = async (req: Request, res: Response) => {
+	const orders = await req.user.getOrders({ include: ["products"] });
+	console.log(orders);
+
+	res.render("shop/orders", {
+		pageTitle: "Orders",
+		path: "orders",
+		orders,
+	});
 };

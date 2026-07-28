@@ -6,6 +6,22 @@
 	<main>
 		<div class="container">
 			<h1>Orders</h1>
+				<% if (!orders.length) { %>
+					 <h1>Nothing there!</h1>
+				<% } else { %>
+					<ul>
+						<% orders.forEach(o => { %>
+							<li>
+								<strong>Order #<%= o.id %></strong>
+							</li>
+							<ul>
+								<% o.products.forEach(p => { %>
+								<li> <%= p.title %> (<%= p.orderItem.quantity %>)</li>
+								<% }); %>
+							</ul>
+						<% }); %>
+					</ul>
+				<% } %>
 		</div>
 	</main>
 </body>
