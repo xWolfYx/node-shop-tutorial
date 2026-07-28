@@ -8,7 +8,6 @@ const order = sequelize.define("order", {
 		primaryKey: true,
 		allowNull: false,
 	},
-	quantity: DataTypes.INTEGER,
 });
 
 export default order;
