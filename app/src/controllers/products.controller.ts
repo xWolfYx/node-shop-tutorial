@@ -5,14 +5,15 @@ import Product from "../models/product.js";
 
 export const renderProducts = async (_: Request, res: Response) => {
 	try {
-		const rawProducts = await Product.findAll();
+		const rawProducts = await Product.fetchAllProducts();
 		const products = rawProducts.map((p) => ({
-			...p.toJSON(),
+			...p,
 			price: toUSD(p.price),
 		}));
 
+
 		res.render("shop/product-list", {
-			products,
+			products: products.length ? products : [],
 			pageTitle: "Products",
 		});
 	} catch (err) {
