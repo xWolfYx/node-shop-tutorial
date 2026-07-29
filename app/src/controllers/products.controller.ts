@@ -26,15 +26,11 @@ export const renderProduct = async (req: Request, res: Response) => {
 	if (!id) return res.redirect("/");
 
 	try {
-		const rawProduct = await Product.findByPk(id);
+		const rawProduct = await Product.fetchProduct(id);
 
 		if (!rawProduct) return res.redirect("/");
 
-		const product = {
-			...rawProduct.toJSON(),
-			price: toUSD(rawProduct.price),
-		};
-		console.log(product);
+		const product = { ...rawProduct, price: toUSD(rawProduct.price) };
 
 		res.render("shop/product-details", {
 			pageTitle: product.title,
