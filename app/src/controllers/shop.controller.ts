@@ -4,9 +4,9 @@ import Product from "../models/product.js";
 
 export const renderIndex = async (_: Request, res: Response) => {
 	try {
-		const rawProducts = await Product.findAll();
+		const rawProducts = await Product.fetchAllProducts();
 		const products = rawProducts.map((p) => ({
-			...p.toJSON(),
+			...p,
 			price: toUSD(p.price),
 		}));
 
