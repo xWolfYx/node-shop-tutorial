@@ -32,6 +32,19 @@ app.use(shopRouter);
 
 app.use(renderNotfoundPage);
 
-app.listen(PORT, () =>
-	console.log(`App is running on http://localhost:${PORT}`),
-);
+const { PORT } = process.env;
+
+const startServer = async () => {
+	try {
+		await connectDB();
+
+		app.listen(PORT, () =>
+			console.log(`App is running on http://localhost:${PORT}`),
+		);
+	} catch (err) {
+		console.log("Error starting the server", err);
+		process.exit(1);
+	}
+};
+
+startServer();
