@@ -7,6 +7,7 @@ import productRouter from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
 import dotenv from "dotenv";
+import { connectDB } from "./utils/db.js";
 import { rootPath } from "./utils/path.js";
 
 const PORT = 8000;
