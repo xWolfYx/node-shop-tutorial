@@ -6,7 +6,7 @@ import orderRouter from "./routes/order.route.js";
 import productRouter from "./routes/products.route.js";
 import shopRouter from "./routes/shop.route.js";
 import "./models/product.js";
-import cartRouter from "../src/routes/cart.route.js";
+import dotenv from "dotenv";
 import { rootPath } from "./utils/path.js";
 
 const PORT = 8000;
