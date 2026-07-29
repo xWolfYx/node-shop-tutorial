@@ -54,4 +54,18 @@ export default class Product {
 			console.log(err);
 		}
 	}
+
+	static async deleteProduct(id: string) {
+		if (!ObjectId.isValid(id)) {
+			return;
+		}
+
+		try {
+			const db = getDB();
+
+			await db.collection("products").deleteOne({ _id: new ObjectId(id) });
+		} catch (err) {
+			console.log(err);
+		}
+	}
 }

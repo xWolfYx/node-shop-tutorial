@@ -122,10 +122,10 @@ export const editProduct = async (req: Request, res: Response) => {
 export const deleteProduct = async (req: Request, res: Response) => {
 	const { id } = req.body;
 
-	if (!id) return;
+	if (!id) return res.redirect("/admin/products");
 
 	try {
-		await Product.destroy({ where: { id } });
+		await Product.deleteProduct(id);
 
 		res.redirect("/admin/products");
 	} catch (err) {
