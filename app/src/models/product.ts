@@ -55,6 +55,29 @@ export default class Product {
 		}
 	}
 
+	static async editProduct(
+		id: string,
+		title: string,
+		imageUrl: string,
+		description: string,
+		price: number,
+	) {
+		if (!ObjectId.isValid(id)) return;
+
+		try {
+			const db = getDB();
+
+			await db
+				.collection("products")
+				.updateOne(
+					{ _id: new ObjectId(id) },
+					{ $set: { title, imageUrl, description, price: price * 100 } },
+				);
+		} catch (err) {
+			console.log(err);
+		}
+	}
+
 	static async deleteProduct(id: string) {
 		if (!ObjectId.isValid(id)) {
 			return;

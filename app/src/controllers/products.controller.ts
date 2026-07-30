@@ -75,13 +75,13 @@ export const renderEditProducts = async (req: Request, res: Response) => {
 	const id = req.params.id as string;
 
 	try {
-		const rawProduct = await Product.findByPk(id);
+		const rawData = await Product.fetchProduct(id);
 
-		if (!rawProduct) return res.redirect("/");
+		if (!rawData) return res.redirect("/");
 
 		const product = {
-			...rawProduct.toJSON(),
-			price: rawProduct.price / 100,
+			...rawData,
+			price: rawData.price / 100,
 		};
 
 		res.render("admin/edit-product", {
@@ -112,11 +112,13 @@ export const addProduct = async (req: Request, res: Response) => {
 export const editProduct = async (req: Request, res: Response) => {
 	const { id, title, imageUrl, description, price } = req.body;
 
-	await Product.update(
-		{ title, imageUrl, description, price: price * 100 },
-		{ where: { id } },
-	);
-	res.redirect("/admin/products");
+	try {
+		await Product.editProduct(id, title, imageUrl, description, price);
+		res.redirect("/admin/products");
+	} catch (err) {
+		console.log("Trouble in editProduct.", err);
+		res.redirect("/admin/products");
+	}
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
