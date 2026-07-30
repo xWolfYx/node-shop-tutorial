@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { getDB } from "../utils/db.js";
 
 export default class User {
@@ -19,4 +20,14 @@ export default class User {
 		}
 	}
 
+	static async findUser(id: string) {
+		const db = getDB();
+
+		try {
+			const user = await db.collection("users").findOne(new ObjectId(id));
+			console.log(user);
+		} catch (err) {
+			console.log(err);
+		}
+	}
 }
