@@ -96,16 +96,24 @@ export const renderEditProducts = async (req: Request, res: Response) => {
 
 export const addProduct = async (req: Request, res: Response) => {
 	const { title, imageUrl, price, description } = req.body;
-	if (title && imageUrl && price && description) {
-		try {
-			const product = new Product(title, imageUrl, description, price * 100);
 
-			await product.save();
-			res.redirect("/admin/products");
-		} catch (err) {
-			console.log(err);
-			res.redirect("/admin/add-product");
-		}
+	if (!title || !imageUrl || !price || !description)
+		return res.redirect("/admin/add-product");
+
+	try {
+		const product = new Product(
+			title,
+			imageUrl,
+			description,
+			price * 100,
+			req.user._id,
+		);
+
+		await product.save();
+		res.redirect("/admin/products");
+	} catch (err) {
+		console.log(err);
+		res.redirect("/admin/add-product");
 	}
 };
 
