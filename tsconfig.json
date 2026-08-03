@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
+		"target": "esnext",
 
 		// ESM (Modules) for Node
-		"module": "NodeNext",
+		"module": "nodenext",
 		"moduleResolution": "NodeNext",
 
 		// Project structure
