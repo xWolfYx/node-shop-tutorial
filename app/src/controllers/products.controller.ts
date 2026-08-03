@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import type { Request, Response } from "express";
 import { toUSD } from "../lib/utils.js";
 import Product from "../models/product.js";
@@ -10,7 +9,6 @@ export const renderProducts = async (_: Request, res: Response) => {
 			...p,
 			price: toUSD(p.price),
 		}));
-
 
 		res.render("shop/product-list", {
 			products: products.length ? products : [],
