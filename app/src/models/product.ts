@@ -79,9 +79,7 @@ export default class Product {
 	}
 
 	static async deleteProduct(id: string) {
-		if (!ObjectId.isValid(id)) {
-			return;
-		}
+		if (!ObjectId.isValid(id)) return;
 
 		try {
 			const db = getDB();
