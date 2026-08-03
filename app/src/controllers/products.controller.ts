@@ -52,7 +52,7 @@ export const renderAddProducts = (_: Request, res: Response) => {
 	});
 };
 
-export const renderAdminProducts = async (req: Request, res: Response) => {
+export const renderAdminProducts = async (_: Request, res: Response) => {
 	try {
 		const rawProducts = await Product.fetchAllProducts();
 
