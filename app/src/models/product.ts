@@ -6,24 +6,29 @@ export default class Product {
 	imageUrl: string;
 	description: string;
 	price: number;
+	userId: string;
 
 	constructor(
 		title: string,
 		imageUrl: string,
 		description: string,
 		price: number,
+		userId: string,
 	) {
 		this.title = title;
 		this.imageUrl = imageUrl;
 		this.description = description;
 		this.price = price;
+		this.userId = userId;
 	}
 
 	async save() {
 		const db = getDB();
 
 		try {
-			return await db.collection("products").insertOne(this);
+			return await db
+				.collection("products")
+				.insertOne({ ...this, userId: this.userId });
 		} catch (err) {
 			console.log(err);
 		}
