@@ -20,7 +20,7 @@ app.set("views", path.join(rootPath, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${rootPath}/public`));
 
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
 	res.locals.path = req.path;
 	next();
 });
