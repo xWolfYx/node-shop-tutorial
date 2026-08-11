@@ -38,8 +38,7 @@ export default class Product {
 		const db = getDB();
 
 		try {
-			const result = await db.collection("products").find().toArray();
-			return result;
+			return await db.collection("products").find().toArray();
 		} catch (err) {
 			console.log(err);
 		}
