@@ -75,7 +75,7 @@ export default class Product {
 				.collection("products")
 				.updateOne(
 					{ _id: new ObjectId(id) },
-					{ $set: { title, imageUrl, description, price: price * 100 } },
+					{ $set: { title, imageUrl, description, price: Math.round(price * 100) } },
 				);
 		} catch (err) {
 			console.log(err);
